@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Students</h2>
+    <form method="post" action="{{ url_for('add_student') }}" class="d-flex">
+      <input type="text" name="name" placeholder="Student name" class="form-control me-2" required />
+      <button class="btn btn-primary" type="submit">Add</button>
+    </form>
+  </div>
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th style="width: 60px;">#</th>
+        <th>Name</th>
+        <th style="width: 140px;">Status</th>
+        <th style="width: 160px;">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for s in students %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ s.name }}</td>
+        <td>
+          {% if s.active %}
+            <span class="badge bg-success">Active</span>
+          {% else %}
+            <span class="badge bg-secondary">Inactive</span>
+          {% endif %}
+        </td>
+        <td>
+          <form method="post" action="{{ url_for('toggle_student', student_id=s.id) }}">
+            <button class="btn btn-outline-secondary btn-sm" type="submit">
+              {% if s.active %}Deactivate{% else %}Activate{% endif %}
+            </button>
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

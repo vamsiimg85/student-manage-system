@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Attendance for {{ selected_date }}</h2>
+    <div>
+      <a class="btn btn-outline-secondary" href="{{ url_for('attendance_history') }}">Back</a>
+      <a class="btn btn-primary" href="{{ url_for('index', date=selected_date) }}">Edit</a>
+    </div>
+  </div>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th style="width: 60px;">#</th>
+        <th>Name</th>
+        <th style="width: 140px;">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for name, status in rows %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td>{{ name }}</td>
+          <td>
+            {% if status == 'present' %}
+              <span class="badge bg-success">Present</span>
+            {% else %}
+              <span class="badge bg-danger">Absent</span>
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
